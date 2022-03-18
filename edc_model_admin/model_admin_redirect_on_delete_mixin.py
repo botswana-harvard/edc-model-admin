@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse, NoReverseMatch
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 
 class ModelAdminRedirectOnDeleteMixin:
@@ -47,8 +47,8 @@ class ModelAdminRedirectOnDeleteMixin:
         if self.post_url_on_delete:
             opts = self.model._meta
             msg = ('The %(name)s "%(obj)s" was deleted successfully.') % {
-                'name': force_text(opts.verbose_name),
-                'obj': force_text(obj_display)}
+                'name': force_str(opts.verbose_name),
+                'obj': force_str(obj_display)}
             messages.add_message(request, messages.SUCCESS, msg)
             return HttpResponseRedirect(self.post_url_on_delete)
         return super().response_delete(request, obj_display, obj_id)
